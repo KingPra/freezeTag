@@ -39,6 +39,9 @@ console.log('should unfreeze ' + r3.tag(r2))
 console.log('line 38 ' + r3.tag(r1));
 console.log('chaser tagged by runner ' + r1.tag(c2));
 console.log('chaser tags a chaser ' + c1.tag(c2))
+console.log(c2.tag(r1));
+console.log('get flag function ' + r1.getFlag());
+console.log('chaser getting flag ' + c1.getFlag());
 // function tag(player) {
 //     if(chasers.Player)
 // }

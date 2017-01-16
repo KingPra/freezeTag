@@ -40,6 +40,9 @@ console.log('should unfreeze ' + r3.tag(r2))
 console.log('line 38 ' + r3.tag(r1));
 console.log('chaser tagged by runner ' + r1.tag(c2));
 console.log('chaser tags a chaser ' + c1.tag(c2))
+console.log(c2.tag(r1));
+console.log('get flag function ' + r1.getFlag());
+console.log('chaser getting flag ' + c1.getFlag());
 // function tag(player) {
 //     if(chasers.Player)
 // }
@@ -50,7 +53,6 @@ module.exports = function Player (person) {
     this.isFrozen = false;
     this.flag = false;
     this.team = null;
-
 
 // tagging funciton
     this.tag = function(runner) {
@@ -74,6 +76,22 @@ module.exports = function Player (person) {
                  }  else {
                         runner.isFrozen;
                         return 'nothing happened';
+                }
+            }
+        }
+    };
+
+    // get the flag function
+    this.getFlag = function() {
+        if(this.team === 'runners' && this.isFrozen === false) { 
+        this.flag = true;
+        return this.name + ' has the flag ';
+        } else {
+            if(this.isFrozen === true) {
+                return this.name + ' can\'t capture the flag because ' + this.name + ' hasn\'t thawed out yet';
+            } else {
+                if(this.team === 'chasers') {
+                    return this.team + ' can\'t capture the flag ';
                 }
             }
         }

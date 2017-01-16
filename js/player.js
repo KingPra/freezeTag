@@ -5,7 +5,6 @@ module.exports = function Player (person) {
     this.flag = false;
     this.team = null;
 
-
 // tagging funciton
     this.tag = function(runner) {
         // a runner is frozen if tagged by a chaser or if runner accidently tags a chaser
@@ -28,6 +27,22 @@ module.exports = function Player (person) {
                  }  else {
                         runner.isFrozen;
                         return 'nothing happened';
+                }
+            }
+        }
+    };
+
+    // get the flag function
+    this.getFlag = function() {
+        if(this.team === 'runners' && this.isFrozen === false) { 
+        this.flag = true;
+        return this.name + ' has the flag ';
+        } else {
+            if(this.isFrozen === true) {
+                return this.name + ' can\'t capture the flag because ' + this.name + ' hasn\'t thawed out yet';
+            } else {
+                if(this.team === 'chasers') {
+                    return this.team + ' can\'t capture the flag ';
                 }
             }
         }
