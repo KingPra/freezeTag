@@ -4,7 +4,6 @@ let Player = require('./player');
 let Team = require('./team');
 window.addEventListener('load', function () {
 
-    console.log('ready to rock');
 });
 
 
@@ -17,41 +16,44 @@ let playerList = [
     new Player('Earl'),
 ]
 
-console.log(playerList[0].team);
 
 
     let team = new Team;
     team.addChasers(playerList[0]);
     team.addChasers(playerList[1]);
     team.addRunners(playerList[2]);
+    team.addChasers(playerList[3]);
+    team.addRunners(playerList[4]);
+    team.addRunners(playerList[5]);
     //team.announce();
 
-console.log(playerList);
+console.log(playerList[2].name + '\'s frozen status is ' + playerList[0].tag(playerList[2]) );
+console.log(playerList[2]);
+console.log(playerList[0]);
+console.log(playerList[5].name + '\'s frozen status is ' + playerList[2].tag(playerList[5]) );
 // function tag(player) {
 //     if(chasers.Player)
 // }
 },{"./player":2,"./team":3}],2:[function(require,module,exports){
 
-module.exports = function Player (name) {
-    this.name = name;
+module.exports = function Player (person) {
+    this.name = person;
     this.isFrozen = false;
     this.flag = false;
     this.team = null;
 
-    // this.tag = function(tagger, runner) {
-    //     if(tagger.team === 'chaser') {
-    //     return player.isFrozen = true;
-    //     } else {
-    //         if(tagger.team === 'runner') {
-    //             return player.isFrozen = false;
-    //         }
-    //     }
-    // };
-    this.tagged = function (status) {
-        return status.isFrozen = true;
+    this.tag = function(runner) {
+        if(this.team === 'chasers') {
+        return runner.isFrozen = true;
+        } else {
+            if(this.team === 'runners' && this.isFrozen === 'false') {
+                return runner.isFrozen = false;
+            } else {
+                return runner.isFrozen;
+            }
+        }
     };
     }
- 
 },{}],3:[function(require,module,exports){
 module.exports = function Team() {
     let chasers = [];
@@ -75,8 +77,6 @@ module.exports = function Team() {
             }
         },
 };
-// console.log(chasers);
-// console.log(runners);
 return players;
 
 }

@@ -20,8 +20,6 @@ module.exports = function Team() {
             }
         },
 };
-// console.log(chasers);
-// console.log(runners);
 return players;
 
 }
