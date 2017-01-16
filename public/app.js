@@ -15,22 +15,31 @@ let playerList = [
     new Player('Thomas'),
     new Player('Earl'),
 ]
-
-
+let c0 = playerList[0];
+let c1 = playerList[1];
+let c2 = playerList[2];
+let r1 = playerList[3];
+let r2 = playerList[4];
+let r3 = playerList[5];
 
     let team = new Team;
     team.addChasers(playerList[0]);
     team.addChasers(playerList[1]);
-    team.addRunners(playerList[2]);
-    team.addChasers(playerList[3]);
+    team.addChasers(playerList[2]);
+    team.addRunners(playerList[3]);
     team.addRunners(playerList[4]);
     team.addRunners(playerList[5]);
     //team.announce();
 
-console.log(playerList[2].name + '\'s frozen status is ' + playerList[0].tag(playerList[2]) );
-console.log(playerList[2]);
-console.log(playerList[0]);
-console.log(playerList[5].name + '\'s frozen status is ' + playerList[2].tag(playerList[5]) );
+console.log(c1.tag(r1));
+console.log(r1);
+console.log(c1.tag(r2));
+console.log(r2);
+console.log(r2.tag(r1));
+console.log('should unfreeze ' + r3.tag(r2))
+console.log('line 38 ' + r3.tag(r1));
+console.log('chaser tagged by runner ' + r1.tag(c2));
+console.log('chaser tags a chaser ' + c1.tag(c2))
 // function tag(player) {
 //     if(chasers.Player)
 // }
@@ -42,18 +51,36 @@ module.exports = function Player (person) {
     this.flag = false;
     this.team = null;
 
+
+// tagging funciton
     this.tag = function(runner) {
-        if(this.team === 'chasers') {
-        return runner.isFrozen = true;
+        // a runner is frozen if tagged by a chaser or if runner accidently tags a chaser
+        if(this.team === 'chasers' && runner.team === 'runners' || this.team === 'runners' && runner.team === 'chasers') {
+            runner.isFrozen = true;
+         return runner.name + ' was frozen by ' + this.name;
         } else {
-            if(this.team === 'runners' && this.isFrozen === 'false') {
-                return runner.isFrozen = false;
+            // this statement lets a runner unfreeze another runner
+            if(this.team === 'runners' && this.isFrozen === false && runner.team === 'runners') {
+                runner.isFrozen = false;
+                console.log('line 15 = ' + runner.name);
+                return runner.name + ' was unfrozen by ' + this.name;
             } else {
-                return runner.isFrozen;
+                // this statement console.logs if runner is frozen and tries to unfreeze another frozen runner
+                if(this.team === 'runners' && this.isFrozen === true) {
+                    console.log(' tagger is frozen ');
+                    runner.isFrozen;
+                    return this.name + ' can\'t unfreeze ' + runner.name + ' because ' + this.name + ' is currently frozen ';
+                    //  this statement runs if a chaser tags a chaser
+                 }  else {
+                        runner.isFrozen;
+                        return 'nothing happened';
+                }
             }
         }
     };
-    }
+}
+
+
 },{}],3:[function(require,module,exports){
 module.exports = function Team() {
     let chasers = [];
