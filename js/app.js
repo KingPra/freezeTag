@@ -1,6 +1,7 @@
 
 let Player = require('./player');
 let Team = require('./team');
+let Won = require('./won');
 window.addEventListener('load', function () {
 
 });
@@ -28,9 +29,10 @@ let r3 = playerList[5];
     team.addRunners(playerList[3]);
     team.addRunners(playerList[4]);
     team.addRunners(playerList[5]);
-    //team.announce();
+    team.announce();
 
 console.log(c1.tag(r1));
+console.log('runner not frozen ' + r3.tag(r2));
 console.log(r1);
 console.log(c1.tag(r2));
 console.log(r2);
@@ -42,6 +44,10 @@ console.log('chaser tags a chaser ' + c1.tag(c2))
 console.log(c2.tag(r1));
 console.log('get flag function ' + r1.getFlag());
 console.log('chaser getting flag ' + c1.getFlag());
+console.log(c1.tag(r1))
+console.log(r2.getFlag());
+console.log(Won(playerList));
 // function tag(player) {
 //     if(chasers.Player)
 // }
+

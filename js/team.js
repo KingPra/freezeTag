@@ -1,3 +1,4 @@
+// this module is currently still very confusing. Got lots of help from leo and noah on this one.
 module.exports = function Team() {
     let chasers = [];
     let runners = [];
@@ -13,14 +14,15 @@ module.exports = function Team() {
         },
         announce: function () {
             for (let i = 0; i < chasers.length; i++) {
-                console.log(chasers[i] + ' is a chaser');
+                console.log(chasers[i]);
             }
             for (let i = 0; i < runners.length; i++) {
-                console.log(runners[i] + ' is a runner');
+                console.log(runners[i]);
             }
         },
-};
-return players;
+
+    };
+    return players;
 
 }
 

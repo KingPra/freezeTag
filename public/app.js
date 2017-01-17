@@ -2,6 +2,7 @@
 
 let Player = require('./player');
 let Team = require('./team');
+let Won = require('./won');
 window.addEventListener('load', function () {
 
 });
@@ -29,9 +30,10 @@ let r3 = playerList[5];
     team.addRunners(playerList[3]);
     team.addRunners(playerList[4]);
     team.addRunners(playerList[5]);
-    //team.announce();
+    team.announce();
 
 console.log(c1.tag(r1));
+console.log('runner not frozen ' + r3.tag(r2));
 console.log(r1);
 console.log(c1.tag(r2));
 console.log(r2);
@@ -43,63 +45,73 @@ console.log('chaser tags a chaser ' + c1.tag(c2))
 console.log(c2.tag(r1));
 console.log('get flag function ' + r1.getFlag());
 console.log('chaser getting flag ' + c1.getFlag());
+console.log(c1.tag(r1))
+console.log(r2.getFlag());
+console.log(Won(playerList));
 // function tag(player) {
 //     if(chasers.Player)
 // }
-},{"./player":2,"./team":3}],2:[function(require,module,exports){
 
-module.exports = function Player (person) {
+
+},{"./player":2,"./team":3,"./won":4}],2:[function(require,module,exports){
+
+module.exports = function Player(person) {
     this.name = person;
     this.isFrozen = false;
     this.flag = false;
     this.team = null;
 
-// tagging funciton
-    this.tag = function(runner) {
+    // tagging function
+    this.tag = function (runner) {
         // a runner is frozen if tagged by a chaser or if runner accidently tags a chaser
-        if(this.team === 'chasers' && runner.team === 'runners' || this.team === 'runners' && runner.team === 'chasers') {
+        if (this.team === 'chasers' && runner.team === 'runners' || this.team === 'runners' && runner.team === 'chasers') {
             runner.isFrozen = true;
-         return runner.name + ' was frozen by ' + this.name;
+            return runner.name + ' was frozen by ' + this.name;
         } else {
             // this statement lets a runner unfreeze another runner
-            if(this.team === 'runners' && this.isFrozen === false && runner.team === 'runners') {
+            if (this.team === 'runners' && this.isFrozen === false && runner.team === 'runners' && runner.isFrozen === true) {
                 runner.isFrozen = false;
-                console.log('line 15 = ' + runner.name);
                 return runner.name + ' was unfrozen by ' + this.name;
             } else {
-                // this statement console.logs if runner is frozen and tries to unfreeze another frozen runner
-                if(this.team === 'runners' && this.isFrozen === true) {
-                    console.log(' tagger is frozen ');
-                    runner.isFrozen;
-                    return this.name + ' can\'t unfreeze ' + runner.name + ' because ' + this.name + ' is currently frozen ';
-                    //  this statement runs if a chaser tags a chaser
-                 }  else {
+                // this statement logs if the tagger tries to unfreeze a runner that is not frozen
+                if (this.team === 'runners' && this.isFrozen === false && runner.team === 'runners' && runner.isFrozen === false) {
+                    return runner.name + ' is not frozen';
+                } else {
+                    // this statement console.logs if runner is frozen and tries to unfreeze another frozen runner
+                    if (this.team === 'runners' && this.isFrozen === true) {
+                        runner.isFrozen;
+                        return this.name + ' can\'t unfreeze ' + runner.name + ' because ' + this.name + ' is currently frozen ';
+                        //  this statement runs if a chaser tags a chaser
+                    } else {
                         runner.isFrozen;
                         return 'nothing happened';
+                    }
                 }
             }
         }
     };
 
     // get the flag function
-    this.getFlag = function() {
-        if(this.team === 'runners' && this.isFrozen === false) { 
-        this.flag = true;
-        return this.name + ' has the flag ';
+    this.getFlag = function () {
+        if (this.team === 'runners' && this.isFrozen === false) {
+            this.flag = true;
+            return this.name + ' has the flag ';
         } else {
-            if(this.isFrozen === true) {
+            if (this.isFrozen === true) {
                 return this.name + ' can\'t capture the flag because ' + this.name + ' hasn\'t thawed out yet';
             } else {
-                if(this.team === 'chasers') {
+                if (this.team === 'chasers') {
                     return this.team + ' can\'t capture the flag ';
                 }
             }
         }
     };
+
 }
 
 
 },{}],3:[function(require,module,exports){
+// this module is currently still very confusing. Got lots of help from leo and noah on this one.
 module.exports = function Team() {
     let chasers = [];
     let runners = [];
@@ -115,16 +127,65 @@ module.exports = function Team() {
         },
         announce: function () {
             for (let i = 0; i < chasers.length; i++) {
-                console.log(chasers[i] + ' is a chaser');
+                console.log(chasers[i]);
             }
             for (let i = 0; i < runners.length; i++) {
-                console.log(runners[i] + ' is a runner');
+                console.log(runners[i]);
             }
         },
-};
-return players;
+
+    };
+    return players;
 
 }
 
 
+},{}],4:[function(require,module,exports){
+ module.exports = function won (teams) {
+
+     for(let i = 0; i < teams.length; i++) {
+         let frozen = teams[i].isFrozen;
+         
+         // need to look at these lines, currently registers false
+         let runners = teams[i].flag;
+         let chasers = teams[i].flag;
+         console.log(teams[i].flag);
+      if (teams[i].team === 'runners' && frozen !== false || teams[i].team === 'chasers' && chasers === true) {
+         return 'chasers won'; 
+     } else {
+         if (teams[i].team === 'runners' && runners === true) {
+             return 'runners won';
+         } else {
+             return 'no one has won yet';
+         }
+     }
+     }
+ }
+
+
+
+
+
+
+
+
+
+
+// won(teams) {
+//     let chasers = [];
+//     let frozenRunners = [];
+//     let flagRunners = [];
+
+//     for (let i = 0; i < teams.length; i++) {
+//         if (teams[i].team === 'chasers') {
+//             chasers.push(teams[i].isFrozen);
+//         } else {
+//             if (teams[i].team === 'runners') {
+//                 frozenRunners.push(teams[i].isFrozen);
+//                 flagRunners.push(teams[i].flag);
+//             }
+//         }
+//     }
+
+// }
 },{}]},{},[1]);
